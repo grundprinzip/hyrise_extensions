@@ -12,7 +12,7 @@ namespace hyrise { namespace access {
 *
 *  Currently we assume that IDs are Integer values
 */
-class BreadthFirstSearchIdx : public PlanOperation {
+class SingleShortestPathIdx : public PlanOperation {
 
 public:
 
@@ -26,6 +26,8 @@ protected:
 
   size_t _levelStop = MAX_LEVEL;
 
+  hyrise_int_t source;
+  hyrise_int_t dest;
 
 public:
 
@@ -34,6 +36,8 @@ public:
   void executePlanOperation();
 
   void setIndexName(std::string idx);
+
+  void setSearchPath(hyrise_int_t s, hyrise_int_t d);
 
 };
 
