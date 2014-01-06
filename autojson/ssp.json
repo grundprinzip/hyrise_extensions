@@ -1,0 +1,60 @@
+{
+  "operators" : {
+    "rl" : {
+      "type" : "JsonTable",
+      "names" : ["A", "B"],
+      "types" :  ["INTEGER", "INTEGER"],
+      "groups" : [1,1],
+      "useStore" : true,
+      "data" : [
+          ["0", "2"],
+	  ["2", "3"]
+      ]
+    },
+    "set" : {
+      "type" : "SetTable",
+      "name" : "reference"
+    },
+
+    "build" : {
+      "type" : "JsonTable",
+      "names" : ["A", "B"],
+      "types" :  ["INTEGER", "INTEGER"],
+      "groups" : [1,1],
+      "useStore" : true,
+      "mergeStore" : true,
+      "data" : [
+      ["0", "1"],
+      ["1", "0"],
+      ["0", "2"],
+      ["2", "0"],
+      ["1", "2"],
+      ["2", "1"],
+      ["2", "3"],
+      ["3", "2"]
+      ]
+    },
+
+    "idx" : {
+      "type" : "CreateIndex",
+      "fields" : ["A"],
+      "index_name" : "json_tab_idx"
+    },
+
+   "idx_scan" : {
+       "type" : "SingleShortestPathIdx",
+       "source" : 0,
+       "dest":  3,
+       "fields": [1],
+       "index" : "json_tab_idx"
+   }
+
+  }, 
+  "edges" : [
+    ["rl", "set"],
+    ["set", "build"],
+    ["build","idx"],
+    ["build", "idx_scan"],
+    ["idx", "idx_scan"]
+  ]
+}

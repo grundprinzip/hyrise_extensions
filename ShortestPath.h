@@ -3,6 +3,12 @@
 
 #include <access/system/PlanOperation.h>
 
+#include <vector>
+#include <queue>
+#include <memory>
+
+
+
 namespace hyrise { namespace access {
 
 /**
@@ -26,8 +32,19 @@ protected:
 
   size_t _levelStop = MAX_LEVEL;
 
-  hyrise_int_t source;
-  hyrise_int_t dest;
+  hyrise_int_t _source;
+  hyrise_int_t _dest;
+
+  const char NONE = 0;
+  const char LEFT = 1;
+  const char RIGHT = 2;
+
+  value_id_t _vid_source;
+  value_id_t _vid_dest;
+
+  std::vector<pos_t> _parent;
+  std::vector<char> _visited;
+  std::vector<pos_t> _resultPath;
 
 public:
 
